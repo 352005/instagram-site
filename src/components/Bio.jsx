@@ -12,9 +12,9 @@ const Bio = ()=>{
 
     const [editFormIsOpen, setEditFormIsOpen] = useState(false)
 
-    const profilePhoto = useLiveQuery(()=> db.bio.toArray(), [])
+    //const profilePhoto = useLiveQuery(()=> db.bio.toArray(), [])
 
-    //const [profilePhoto, setProfilePhoto] = useState(profile)
+    const [profilePhoto, setProfilePhoto] = useState(profile)
 
     useEffect(() => {
         const setDataFromDb = async ()=>{
@@ -22,13 +22,13 @@ const Bio = ()=>{
             userDetailsFromDb && setUserDetails(userDetailsFromDb)
         }
 
-        /*const setDpFromDb = async ()=>{
+        const setDpFromDb = async ()=>{
             const userDpFromDb = await db.bio.get('bioDp')
             userDpFromDb && setProfilePhoto(userDpFromDb)
-        }*/
+        }
 
         setDataFromDb()
-        //setDpFromDb()
+        setDpFromDb()
     });
     
     const updateUser = async (event)=>{
@@ -44,17 +44,17 @@ const Bio = ()=>{
         setEditFormIsOpen(false)
     }
 
-    const updateProfile = async ()=>{
+    /*const updateProfile = async ()=>{
         db.bio.add({
             url: await getPhotoUrl('#profilePhotoInput')
         })
-    }
+    }*/
 
-    /*const updateProfile = async ()=>{
+    const updateProfile = async ()=>{
         const newProfilePhoto = await getPhotoUrl('#profilePhotoInput')
         await db.bio.put(newProfilePhoto, 'bioDp')
         setProfilePhoto(newProfilePhoto)
-    }*/
+    }
 
     const editForm = (
         <form className='edit-bio-form' onSubmit={(e)=> updateUser(e)}>
@@ -73,7 +73,7 @@ const Bio = ()=>{
             <input type="file" accept='image/*' name="photo" id="profilePhotoInput" />
             <label htmlFor="profilePhotoInput">
                 <div className="profile-photo" role="button" title="click to edit photo" onClick={updateProfile}>
-                    <img src={profilePhoto?profilePhoto:profile} alt="Profile" />
+                    <img src={profilePhoto? profilePhoto : profile} alt="Profile" />
                 </div>
             </label>
             
